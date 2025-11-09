@@ -14,9 +14,6 @@ interface SearchByNutriensProps {
   setSelectedRecipe: Dispatch<React.SetStateAction<Recipe>>
   selectedRecipe: Recipe
   setRecipes: Dispatch<React.SetStateAction<Recipes>>
-
-  // TODO: searchByNutreins sonuçları buraya gelecek yani datası  YAPILDI
-  // TODO: recipesByNutrients   YAPILDI
 }
 
 function SearchByNutriens({
@@ -30,8 +27,6 @@ function SearchByNutriens({
   selectedRecipe,
   setRecipes
 
-
-  // TODO: recipesByNutrients
 }: SearchByNutriensProps) {
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -173,8 +168,6 @@ function SearchByNutriens({
         Find Recipes by Nutrition
       </button>
 
-
-      {/* Infinite scroll bu kısıma eklenecek  */}
       <div>
 
 
@@ -201,7 +194,6 @@ function SearchByNutriens({
                     <img src={recipe.image || "There is no image "} alt={recipe.title} />
 
                     <div className="recipe-overlay">
-                      {/* <span className="recipe-time">{recipe.readyInMinutes}</span> */}
                       <span className="health-score">
                         Calories: {recipe.calories}
                       </span>
@@ -221,14 +213,8 @@ function SearchByNutriens({
                   <div className="recipe-info">
                     <h3>{recipe.title}</h3>
                     <div className="recipe-meta">
-                      {/* <span className="servings">
-                     {recipe.servigs || "N/A"} servings
-                     </span> */}
                     </div>
-
                   </div>
-
-
                 </div>
               ))}
             </div>

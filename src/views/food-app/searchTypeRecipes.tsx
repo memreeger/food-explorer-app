@@ -9,7 +9,7 @@ function SearchTypeRecipes({
   handleSearch,
   searchQuery,
   setSearchQuery,
-  
+
 
 }: searchTypeRecipesProps) {
   return (

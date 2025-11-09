@@ -23,13 +23,6 @@ function Recipes({
   searchQuery,
 }: RecipesProps) {
 
-  // const dataLength = recipes?.results?.length
-  // const totalPageNumber = recipes.totalResults;
-  // const isClickableMoreThanBtn =
-  //   totalPageNumber < offset + constants.resultNumber;
-
-  // TODO: fetch to axios yap            YAPILDI
-
   const getRecipeDetails = async (recipeId: number) => {
     try {
       const url =
@@ -41,21 +34,11 @@ function Recipes({
 
       const response = await axios.get(url);
       const data = response.data;
-
-      // const response = await fetch(
-      //   `https://api.spoonacular.com/recipes/${recipeId}/information?apiKey=${constants.API_KEY}&includeNutrition=true`
-      // );
-      // const data = await response.json();
-
       setSelectedRecipe(data);
     } catch (error) {
       console.log("getRecipeDetails: ", error);
     }
   };
-
-  // const handleClickMoreThan = () => {
-  //   setOffset(offset + constants.resultNumber);
-  // };
 
 
   const fetchMoreRecipes = async () => {
@@ -88,7 +71,6 @@ function Recipes({
       next={fetchMoreRecipes}
       hasMore={recipes.totalResults > constants.resultNumber + offset}
       loader={<p>Loading...</p>}
-      //TODO: Bu kısım eğer hiç search edilmemişse gözükmemesi lazım      YAPILDI
       endMessage={
         (recipes.totalResults < constants.resultNumber + offset) && (recipes.results.length > 0) && (
           <p style={{ textAlign: "center" }}>

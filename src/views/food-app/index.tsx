@@ -54,16 +54,12 @@ function FoodApp() {
 
   const [selectedRecipe, setSelectedRecipe] =
     useState<RecipeDetail>(initialRecipeDetail);
-  // { console.log(selectedRecipe, " selected recipe") }//-------------------------------------------------------
 
   const searchRecipes = async (query: string) => {
     if (query.trim() == "") return;
 
     setLoading(true);
-    /**
-     * TODO: axiosa dönüştürülecektir.
-     * detail içinde axiosa dönüştürülecektir
-     */
+
     try {
       const url = // URL'in duruşunu okunaklı hale getirdim
         `${spoonacularApi.BASE_URL}` +
@@ -74,26 +70,10 @@ function FoodApp() {
         `&number=${constants.resultNumber}` +
         `&addRecipeInformation=${constants.addRecipeInformation}`;
 
-      // const response = await fetch(url);
-      // const data = (await response.json()) as RecipesType;
 
       const response = await axios.get<RecipesType>(url); // Axios.get ile yaptım. ARAŞTIRIRKEN PARAMS DİYE BİR ŞEY GÖRDÜM ONU Bİ ANLAMAK LAZIM
       const data = response.data as RecipesType;
 
-      // if (!response.ok) {                                            //aşağıya catch yazdım. !response.ok axios ile çalışmıyor. Nedenini bulamadım. Axiosun
-      //   setCustomError({
-      //     isError: true,
-      //     errorMessage: data.message,
-      //   });
-
-      //   return;
-      // }
-
-      // setRecipes(data);
-
-      // TODO önceki verileri tut, yeni geleni üzerine ekle
-      // daha fazla butonunu tıklanıldımı
-      // aynı verileri tekrar eklememesi gerekiyor
 
       setRecipes((prev) => {
         // defensive checks
@@ -129,7 +109,6 @@ function FoodApp() {
   };
 
   const searchByNutrients = async () => {
-    // recipes.results = [] // Recipes sekmesinde arama yapıp gelenler için önceki değerleri sıfırlama
     setLoading(true);
 
     try {
@@ -165,7 +144,6 @@ function FoodApp() {
         return ([...prevResults, ...newUnique])
       });
     } catch (error: any) {
-      // any yazınca kızmıyor, unknown yazınca error kızıyor ???
       const errorMessage =
         error.response?.data?.message || "There is an error, please try again";
 
@@ -179,12 +157,6 @@ function FoodApp() {
   };
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    /**
-     * Kullanıcı more than yaptıktan sonra yeni bir arama yaparsa
-     * offset ve daha önce tuttuğu veriler sıfırlanmalı aynı zamanda kullanıcı
-     * aynı arama queryle search butonuna tıklarsa hiç bir aksiyon alınmamalı çünkü kullanıcı
-     * aynı şeyi tekrara aramaya çalışıyordur
-     */
 
     if (searchType === "recipes") {
       if (searchQuery === searchInputRef.current) {
@@ -259,10 +231,8 @@ function FoodApp() {
         selectedRecipe={selectedRecipe}
         setRecipes={setRecipes}
 
-      // TODO: recipesByNutrients
       />
 
-      {/* TODO: Component olacak */}
       {searchQuery && (
         <Recipes
           recipes={recipes}
@@ -274,14 +244,7 @@ function FoodApp() {
         />
       )}
 
-      {/**TODO: Component olacak */}
-      <>
-        {/**
-         * selectedRecipe
-         * setSelectedRecipe
-         * initialRecipeDetail
-         */}
-      </>
+
       <ReceipeDetail
         selectedRecipe={selectedRecipe}
         setSelectedRecipe={setSelectedRecipe}
