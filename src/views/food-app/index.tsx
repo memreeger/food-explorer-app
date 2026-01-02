@@ -112,36 +112,38 @@ function FoodApp() {
     setLoading(true);
 
     try {
-      // TODO:Tum stateleri and and ekleyeceğiz
+      // Boş inputlara default değer atıyoruz
+      const minCarbs = nutrientFilters.minCarbs?.trim() || "1";
+      const maxCarbs = nutrientFilters.maxCarbs?.trim() || "5000";
+      const minCalories = nutrientFilters.minCalories?.trim() || "1";
+      const maxCalories = nutrientFilters.maxCalories?.trim() || "5000";
+      const minProtein = nutrientFilters.minProtein?.trim() || "1";
+      const maxProtein = nutrientFilters.maxProtein?.trim() || "5000";
+
       const url =
-        `${spoonacularApi.BASE_URL}`
-        + `/${spoonacularApi.GET_RECIPES}`
-        + `/findByNutrients?apiKey=${constants.API_KEY}`
-        + `&minCarbs=${nutrientFilters.minCarbs}`
-        + `&maxCarbs=${nutrientFilters.maxCarbs}`
-        + `&minCalories=${nutrientFilters.minCalories}`
-        + `&maxCalories=${nutrientFilters.maxCalories}`
-        + `&minProtein=${nutrientFilters.minProtein}`
-        + `&maxPro=${nutrientFilters.maxProtein}`
-        + `&number=${constants.resultNumber}`
-        ;
+        `${spoonacularApi.BASE_URL}/${spoonacularApi.GET_RECIPES}/findByNutrients?apiKey=${constants.API_KEY}` +
+        `&minCarbs=${minCarbs}` +
+        `&maxCarbs=${maxCarbs}` +
+        `&minCalories=${minCalories}` +
+        `&maxCalories=${maxCalories}` +
+        `&minProtein=${minProtein}` +
+        `&maxProtein=${maxProtein}` +
+        `&number=${constants.resultNumber}`;
+
+      console.log("Fetching URL:", url);
 
       const response = await axios.get<RecipeByNutrients[]>(url);
       const data = response.data;
 
-      console.log(data, "DATA")
-
       setRecipesByNutrients((prev) => {
-        // defensive checks
         const prevResults = prev ?? [];
 
-        if (offset === 0 || prevResults.length === 0) {
-          return data;
-        }
+        if (prevResults.length === 0) return data;
+
         const existingIds = new Set(prevResults.map((r) => r.id));
         const newUnique = data.filter((r) => !existingIds.has(r.id));
 
-        return ([...prevResults, ...newUnique])
+        return [...prevResults, ...newUnique];
       });
     } catch (error: any) {
       const errorMessage =
@@ -155,6 +157,7 @@ function FoodApp() {
       setLoading(false);
     }
   };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 

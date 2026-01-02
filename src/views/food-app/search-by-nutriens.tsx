@@ -44,6 +44,9 @@ function SearchByNutriens({
   };
 
   const handleNutrientSearch = () => {
+    setRecipesByNutrients([]);
+
+    setOffset(0);
     setRecipes({
       results: [],
       number: 0,
